@@ -1,0 +1,107 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button [routerLink]="['/vehicules', vehiculeId]">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Nouvel entretien</span>
+</mat-toolbar>
+
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Enregistrer un entretien</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Type d'entretien</mat-label>
+          <mat-select formControlName="typeEntretien">
+            <mat-option *ngFor="let t of typesEntretien" [value]="t">{{ t }}</mat-option>
+          </mat-select>
+          <mat-error>Type requis</mat-error>
+        </mat-form-field>
+
+        <!-- Estimation du coût -->
+        <mat-card class="estimation-card" *ngIf="coutEstime">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>calculate</mat-icon>
+              Estimation automatique
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="coutEstime.detail" class="estimation-table">
+
+              <ng-container matColumnDef="produit">
+                <th mat-header-cell *matHeaderCellDef>Produit</th>
+                <td mat-cell *matCellDef="let d">{{ d.produit.nom }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="quantite">
+                <th mat-header-cell *matHeaderCellDef>Qté</th>
+                <td mat-cell *matCellDef="let d">{{ d.quantite }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="prix">
+                <th mat-header-cell *matHeaderCellDef>Prix pièce</th>
+                <td mat-cell *matCellDef="let d">{{ d.produit.prix | currency:'EUR' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="mainDOeuvre">
+                <th mat-header-cell *matHeaderCellDef>Main d'œuvre</th>
+                <td mat-cell *matCellDef="let d">{{ d.produit.mainDOeuvre | currency:'EUR' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef>Sous-total</th>
+                <td mat-cell *matCellDef="let d">
+                  {{ (d.produit.prix + d.produit.mainDOeuvre) * d.quantite | currency:'EUR' }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="colonnes"></tr>
+              <tr mat-row *matRowDef="let row; columns: colonnes;"></tr>
+            </table>
+
+            <mat-divider></mat-divider>
+            <div class="total-row">
+              <strong>Total estimé :</strong>
+              <strong class="total-amount">{{ coutEstime.total | currency:'EUR' }}</strong>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date</mat-label>
+          <input matInput type="date" formControlName="date"/>
+          <mat-error>Date requise</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Coût final (€)</mat-label>
+          <input matInput type="number" formControlName="cout"/>
+          <mat-hint>Pré-rempli automatiquement, modifiable</mat-hint>
+          <mat-error>Coût requis</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Note / Remarques</mat-label>
+          <textarea matInput formControlName="note" rows="3"></textarea>
+        </mat-form-field>
+
+        <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+
+        <div class="form-actions">
+          <button mat-button type="button" [routerLink]="['/vehicules', vehiculeId]">
+            Annuler
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="chargement">
+            {{ chargement ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

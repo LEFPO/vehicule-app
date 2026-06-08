@@ -1,0 +1,57 @@
+.rappels-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.alertes-card {
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.alerte-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ffe0b2;
+}
+
+.alerte-row:last-child {
+  border-bottom: none;
+}
+
+.alerte-date, .alerte-km {
+  font-size: 13px;
+  color: #666;
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px;
+  color: #888;
+}
+
+.erreur {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 8px;
+}

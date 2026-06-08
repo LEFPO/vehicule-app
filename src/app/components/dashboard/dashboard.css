@@ -1,0 +1,49 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.dashboard-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.vehicules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.vehicule-card {
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.vehicule-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.vehicule-card mat-icon {
+  vertical-align: middle;
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px;
+  color: #888;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  height: 64px;
+  width: 64px;
+}

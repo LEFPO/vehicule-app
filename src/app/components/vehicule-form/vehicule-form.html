@@ -1,0 +1,113 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button routerLink="/dashboard">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{ modeEdition ? 'Modifier le véhicule' : 'Ajouter un véhicule' }}</span>
+</mat-toolbar>
+
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ modeEdition ? 'Modifier le véhicule' : 'Nouveau véhicule' }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="form-row">
+          <!-- Marque avec API -->
+          <mat-form-field appearance="outline">
+            <mat-label>Marque</mat-label>
+            <mat-select formControlName="marque">
+              @if (chargementMarques) {
+                <mat-option disabled>Chargement...</mat-option>
+              }
+              @for (m of marques; track m) {
+                <mat-option [value]="m">{{ m }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>Marque requise</mat-error>
+          </mat-form-field>
+
+          <!-- Modèle avec API -->
+          <mat-form-field appearance="outline">
+            <mat-label>Modèle</mat-label>
+            <mat-select formControlName="modele">
+              @if (chargementModeles) {
+                <mat-option disabled>Chargement...</mat-option>
+              }
+              @if (!chargementModeles && modeles.length === 0) {
+                <mat-option disabled>Sélectionnez d'abord une marque</mat-option>
+              }
+              @for (m of modeles; track m) {
+                <mat-option [value]="m">{{ m }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>Modèle requis</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Année</mat-label>
+            <input matInput type="date" formControlName="annee"/>
+            <mat-error>Année requise</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Kilométrage</mat-label>
+            <input matInput type="number" formControlName="kilometrage"/>
+            <mat-error>Kilométrage requis</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Carburant</mat-label>
+            <mat-select formControlName="carburant">
+              @for (c of carburants; track c) {
+                <mat-option [value]="c">{{ c }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>Carburant requis</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Type de véhicule</mat-label>
+            <mat-select formControlName="typeVehicule">
+              @for (t of typesVehicule; track t) {
+                <mat-option [value]="t">{{ t }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>Type requis</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Immatriculation</mat-label>
+            <input matInput formControlName="immatriculation" maxlength="9"/>
+            <mat-error>Immatriculation requise (max 9 caractères)</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Attributs spécifiques</mat-label>
+            <input matInput formControlName="attributsSpecifique"/>
+          </mat-form-field>
+        </div>
+
+        @if (erreur) {
+          <p class="erreur">{{ erreur }}</p>
+        }
+
+        <div class="form-actions">
+          <button mat-button type="button" routerLink="/dashboard">Annuler</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="chargement">
+            {{ chargement ? 'Enregistrement...' : (modeEdition ? 'Modifier' : 'Enregistrer') }}
+          </button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

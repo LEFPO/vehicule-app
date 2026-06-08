@@ -1,0 +1,115 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button routerLink="/dashboard">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Gestion des produits</span>
+</mat-toolbar>
+
+<div class="produits-container">
+
+  <div class="main-layout">
+
+    <!-- Liste des produits -->
+    <mat-card class="liste-card">
+      <mat-card-header>
+        <mat-card-title>Liste des produits</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="produits" *ngIf="produits.length > 0">
+
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef>Nom</th>
+            <td mat-cell *matCellDef="let p">{{ p.nom }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let p">{{ p.typeProduit }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="prix">
+            <th mat-header-cell *matHeaderCellDef>Prix</th>
+            <td mat-cell *matCellDef="let p">{{ p.prix | currency:'EUR' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="mainDOeuvre">
+            <th mat-header-cell *matHeaderCellDef>Main d'œuvre</th>
+            <td mat-cell *matCellDef="let p">{{ p.mainDOeuvre | currency:'EUR' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let p">
+              <button mat-icon-button color="primary" (click)="selectionnerProduit(p)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="colonnes"></tr>
+          <tr mat-row *matRowDef="let row; columns: colonnes;"
+              [class.selected]="produitSelectionne?.id === row.id"></tr>
+        </table>
+
+        <div class="empty-state" *ngIf="produits.length === 0">
+          <p>Aucun produit enregistré</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Formulaire -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title>{{ modeEdition ? 'Modifier le produit' : 'Nouveau produit' }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="nom"/>
+            <mat-error>Nom requis</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description"/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Type de produit</mat-label>
+            <mat-select formControlName="typeProduit">
+              <mat-option *ngFor="let t of typesProduit" [value]="t">{{ t }}</mat-option>
+            </mat-select>
+            <mat-error>Type requis</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Prix (€)</mat-label>
+            <input matInput type="number" formControlName="prix"/>
+            <mat-error>Prix requis</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Main d'œuvre (€)</mat-label>
+            <input matInput type="number" formControlName="mainDOeuvre"/>
+            <mat-error>Main d'œuvre requise</mat-error>
+          </mat-form-field>
+
+          <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+
+          <div class="form-actions">
+            <button mat-button type="button" (click)="annuler()" *ngIf="modeEdition">
+              Annuler
+            </button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="chargement">
+              {{ chargement ? 'Enregistrement...' : (modeEdition ? 'Modifier' : 'Ajouter') }}
+            </button>
+          </div>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

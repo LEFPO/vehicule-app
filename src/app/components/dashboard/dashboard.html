@@ -1,0 +1,51 @@
+<mat-toolbar color="primary">
+  <span>🚗 AutoEntretien</span>
+  <span class="spacer"></span>
+  <span>Bonjour, {{ nom }}</span>
+  <button mat-icon-button (click)="logout()" title="Se déconnecter">
+    <mat-icon>logout</mat-icon>
+  </button>
+  <button mat-button routerLink="/produits">
+    <mat-icon>build</mat-icon> Produits
+  </button>
+  <button mat-button routerLink="/rappels" color="accent">
+    <mat-icon>notifications</mat-icon> Rappels
+  </button>
+  <button mat-icon-button routerLink="/profil" title="Mon profil">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="dashboard-container">
+  <div class="header-row">
+    <h2>Mes véhicules</h2>
+    <button mat-raised-button color="primary" routerLink="/vehicules/new">
+      <mat-icon>add</mat-icon> Ajouter un véhicule
+    </button>
+  </div>
+
+  <div class="vehicules-grid" *ngIf="vehicules.length > 0">
+    <mat-card *ngFor="let v of vehicules" class="vehicule-card" (click)="voirDetail(v.id)">
+      <mat-card-header>
+        <mat-card-title>{{ v.marque }} {{ v.modele }}</mat-card-title>
+        <mat-card-subtitle>{{ v.immatriculation }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><mat-icon>local_gas_station</mat-icon> {{ v.carburant }}</p>
+        <p><mat-icon>speed</mat-icon> {{ v.kilometrage | number }} km</p>
+        <p><mat-icon>directions_car</mat-icon> {{ v.typeVehicule }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="voirDetail(v.id); $event.stopPropagation()">
+          Voir détails →
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="empty-state" *ngIf="vehicules.length === 0">
+    <mat-icon>directions_car</mat-icon>
+    <p>Aucun véhicule enregistré</p>
+    <button mat-raised-button color="primary">Ajouter mon premier véhicule</button>
+  </div>
+</div>

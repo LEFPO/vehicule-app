@@ -1,0 +1,45 @@
+<div class="register-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Créer un compte</mat-card-title>
+      <mat-card-subtitle>Rejoignez l'application</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom complet</mat-label>
+          <input matInput formControlName="nom"/>
+          <mat-error *ngIf="form.get('nom')?.hasError('required')">Nom requis</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email"/>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email requis</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Format invalide</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" formControlName="motDePasse"/>
+          <mat-error *ngIf="form.get('motDePasse')?.hasError('required')">Mot de passe requis</mat-error>
+          <mat-error *ngIf="form.get('motDePasse')?.hasError('minlength')">6 caractères minimum</mat-error>
+        </mat-form-field>
+
+        <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="chargement" class="full-width">
+          {{ chargement ? 'Inscription...' : 'Créer mon compte' }}
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <p>Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>

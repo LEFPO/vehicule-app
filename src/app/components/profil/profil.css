@@ -1,0 +1,50 @@
+.profil-container {
+  padding: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.avatar-card {
+  text-align: center;
+}
+
+.avatar mat-icon {
+  font-size: 80px;
+  height: 80px;
+  width: 80px;
+  color: #1976d2;
+}
+
+.avatar h2 {
+  margin: 8px 0 4px;
+  font-size: 22px;
+}
+
+.avatar p {
+  color: #666;
+  margin: 0;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.erreur {
+  color: red;
+  font-size: 14px;
+}
+
+.danger-card {
+  border-left: 4px solid #f44336;
+}

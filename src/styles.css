@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+snack-bar-container.snackbar-erreur {
+  background: #f44336;
+  color: white;
+}
+
+.snackbar-erreur .mdc-button__label {
+  color: white;
+}
+
+.snackbar-erreur .mat-mdc-snack-bar-label {
+  color: white;
+}
