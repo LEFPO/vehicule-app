@@ -62,6 +62,7 @@
             "ssl": true,
             "sslKey": "ssl/server.key",
             "sslCert": "ssl/server.crt",
+            "proxyConfig": "proxy.conf.json",
             "buildTarget": "vehicule-app:build"
           },
 
