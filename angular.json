@@ -59,9 +59,12 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "buildTarget": "vehicule-app:build",
-            "proxyConfig": "proxy.conf.json"
+            "ssl": true,
+            "sslKey": "ssl/server.key",
+            "sslCert": "ssl/server.crt",
+            "buildTarget": "vehicule-app:build"
           },
+
           "configurations": {
             "production": {
               "buildTarget": "vehicule-app:build:production"
